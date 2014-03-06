@@ -3,9 +3,14 @@
 import csv
 import templates
 
+# Alias for generateApplications
 def g():
   return generateApplications()
 
+'''
+  Main static function, reads "r.csv" and
+  spits out html files in applications/
+'''
 def generateApplications():
   reader = csv.reader(open('r.csv', 'rb'))
   fields = []
@@ -16,6 +21,12 @@ def generateApplications():
       buildApplicationForm(fields, applicant)
   return
 
+'''
+ Returns payload of three arrays:
+  - Personal Information Hash
+  - Leadership Activities (Array of Hashes)
+  - Service Activities (Array of Hashes)
+'''
 def normalizeData(fields, data):
   payload = []
   payload.append(normalizePersonal(data[0:10]))
@@ -23,42 +34,32 @@ def normalizeData(fields, data):
   payload.append(normalizeActivites(data[52:]))
   return payload
 
+# Returnes hash of personal info
 def normalizePersonal(data):
-  return {  'time':data[0],
-            'name':data[1],
-            'id':data[2],
-            'grade':data[3],
-            'fourthTeacher':data[4],
-            'fourthRoom':data[5],
-            'email':data[6],
-            'homePhone':data[7],
-            'cellPhone':data[8],
-            'gpa':data[9] }
+  fields = ['time', 'name', 'id', 'grade', 'fourthTeacher', 'fourthRoom', 'email', 'homePhone', 'cellPhone', 'gpa']
+  return buildHash(fields, data)
 
 lol = lambda lst, sz: [lst[i:i+sz] for i in range(0, len(lst), sz)]
 
+# Takes a long list of activites --> array of activity hashes
 def normalizeActivites(data):
-  p = []
-  for a in lol(data,7):
-    p.append(normalizeActivity(a))
-  return p
+  activities = []
+  for activity in lol(data,7):
+    activities.append(normalizeActivity(activity))
+  return activities
 
+# Takes list of activity attrs --> activity hash
 def normalizeActivity(data):
   fields = ['name', 'desc', 'hours', 'date', 'sName', 'sPhone', 'sEmail']
-  return buildDictionary(fields, data)
+  return buildHash(fields, data)
 
-def buildDictionary(fields, data):
-  p = dict()
-  if len(data) != len(fields):
-    print("field and data length did not match!!!!")
-    return
-  for i, f in enumerate(fields):
-    p[f] = data[i]
-  return p
+# Takes an array of fields and array of values
+def buildHash(fields, data):
+  return dict(zip(fields,data))
 
 
 def buildApplicationForm(fields, data):
-  p = normalizeData(fields,data)
+  payload = normalizeData(fields,data)
   fileName = p[0]['name'] + '.html'
   file = open('applications/' + fileName, 'w+')
   file.write("<!DOCTYPE html> <html lang='en'>")

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 
 from string import Template
 
