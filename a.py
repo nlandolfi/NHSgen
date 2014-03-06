@@ -2,6 +2,7 @@
 
 import csv
 from string import Template
+import templates
 
 # Iterate over the csv file and call buildApplicationForm with dictionaryObject
 def g():
@@ -13,87 +14,6 @@ def g():
     else:
       buildApplicationForm(fields, applicant)
   return
-
-personalInfoTemplate = Template("""
-  <p>Full Name: $name</p>
-  <p>Student ID #: $id</p>
-  <p>Grade: $grade</p>
-  <p>Fourth Period Teacher: $fourthTeacher</p>
-  <p>Fourth Period Room Number: $fourthRoom</p>
-  <p>Email Address: $email</p>
-  <p>Home Phone: $homePhone</p>
-  <p>Cell Phone: $cellPhone</p>
-  <p>GPA: $gpa</p>
-  """)
-
-activitiesTemplate = Template("""
-  <table class='table'>
-  <thead>
-    <tr> 
-      <th>Name</th>
-      <th>Description</th>
-      <th>Hours</th>
-      <th>Date</th>
-      <th>Supervisor Name</th>
-      <th>Supervisor Phone Number</th>
-      <th>Supervisor Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      $activity1
-    </tr>
-    <tr>
-      $activity2
-    </tr>
-    <tr>
-      $activity3
-    </tr>
-    <tr>
-      $activity4
-    </tr>
-    <tr>
-      $activity5
-    </tr>
-    <tr>
-      $activity6
-    </tr>
-  </tbody>
-  </table>
-  """)
-
-activityTemplate = Template("""
-    <td> $name
-    </td>
-    <td> $desc
-    </td>
-    <td>$hours
-    </td>
-    <td>$date
-    </td>
-    <td>$sName
-    </td>
-    <td>$sPhone
-    </td>
-    <td>$sEmail
-    </td>
-  """)
-
-activityTemplate1 = Template("""
-    $name on $date for $hours hours
-    <p>$desc</p>
-    <p>Supervisor Name: $sName  Phone Number: $sPhone  Email: $sEmail</p>
-  """)
-
-activitiesTemplate1 = Template("""
-    $activity1
-    $activity2
-    $activity3
-    $activity4
-    $activity5
-    $activity6
-  """)
-
 
 def normalizeData(fields, data):
   payload = []
@@ -143,27 +63,27 @@ def buildApplicationForm(fields, data):
   file.write("<!DOCTYPE html> <html lang='en'>")
   file.write("<link rel='stylesheet' type='text/css' href='assets/css/bootstrap.min.css'>")
   file.write("<h1>Personal Information</h1>")
-  file.write(personalInfoTemplate.substitute(p[0]))
-  templates = [];
+  file.write(templates.personalInfoTemplate.substitute(p[0]))
+  leadershipTemplates = [];
   for x in p[1]:
-    templates.append(activityTemplate.substitute(x))
+    leadershipTemplates.append(templates.activityTemplate.substitute(x))
   file.write("<h1>Leadership Activities</h1>")
-  file.write(activitiesTemplate.substitute(activity1=templates[0],
-                                           activity2=templates[1],
-                                           activity3=templates[2],
-                                           activity4=templates[3],
-                                           activity5=templates[4],
-                                           activity6=templates[5]))
-  templates = [];
+  file.write(templates.activitiesTemplate.substitute(activity1=leadershipTemplates[0],
+                                           activity2=leadershipTemplates[1],
+                                           activity3=leadershipTemplates[2],
+                                           activity4=leadershipTemplates[3],
+                                           activity5=leadershipTemplates[4],
+                                           activity6=leadershipTemplates[5]))
+  serviceTemplates = [];
   for x in p[2]:
-    templates.append(activityTemplate.substitute(x))
+    serviceTemplates.append(templates.activityTemplate.substitute(x))
   file.write("<h1>Service Activities</h1>")
-  file.write(activitiesTemplate.substitute(activity1=templates[0],
-                                           activity2=templates[1],
-                                           activity3=templates[2],
-                                           activity4=templates[3],
-                                           activity5=templates[4],
-                                           activity6=templates[5]))
+  file.write(templates.activitiesTemplate.substitute(activity1=serviceTemplates[0],
+                                           activity2=serviceTemplates[1],
+                                           activity3=serviceTemplates[2],
+                                           activity4=serviceTemplates[3],
+                                           activity5=serviceTemplates[4],
+                                           activity6=serviceTemplates[5]))
   file.write("</html>")
 
 
