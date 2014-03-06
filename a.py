@@ -3,9 +3,6 @@
 import csv
 from string import Template
 
-
-# map = ['Timestamp', 'Full Name', 'Student ID #', 'Grade', 'Fourth Period Teacher', 'Fourth Period Teacher Room #', 'Your email address', 'Your Home Phone #', 'Your cell phone (if available)', 'Your current cumulative GPA (weighted)', 'Activity Name', 'Description of Accomplishment', 'Total Hours', 'Date Performed', 'Supervisor Name', 'Supervisor Email', 'Activity Name', 'Description of Accomplishment', 'Total Hours', 'Date Performed', 'Supervisor Name', 'Supervisor Phone #', 'Supervisor Email', 'Activity Name', 'Description of Accomplishment', 'Date Performed', 'Supervisor Name', 'Supervisor Phone #', 'Supervisor Email', 'Activity Name', 'Description of Accomplishment', 'Total Hours', 'Date Performed', 'Supervisor Name', 'Supervisor Phone #', 'Supervisor Email', 'Activity Name', 'Description of Accomplishment', 'Total Hours', 'Date Performed', 'Supervisor Name', 'Supervisor Phone #', 'Supervisor Email', 'Activity Name', 'Description of Accomplishment', 'Total Hours', 'Date Performed', 'Supervisor Name', 'Supervisor Phone #', 'Supervisor Email']
-
 # Iterate over the csv file and call buildApplicationForm with dictionaryObject
 def g():
   reader = csv.reader(open('r.csv', 'rb'))
