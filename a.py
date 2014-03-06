@@ -1,11 +1,12 @@
 #!/usr/bin/python
 
 import csv
-from string import Template
 import templates
 
-# Iterate over the csv file and call buildApplicationForm with dictionaryObject
 def g():
+  return generateApplications()
+
+def generateApplications():
   reader = csv.reader(open('r.csv', 'rb'))
   fields = []
   for applicant in reader:
@@ -85,6 +86,4 @@ def buildApplicationForm(fields, data):
                                            activity5=serviceTemplates[4],
                                            activity6=serviceTemplates[5]))
   file.write("</html>")
-
-
   file.close()
