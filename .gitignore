@@ -3,6 +3,8 @@ applications/*.html
 
 # DS_Store
 .DS_Store
+applications/assets/.DS_Store
+applications/assets/css/.DS_Store
 
 # No compiled python
 *.pyc
