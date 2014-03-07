@@ -1,0 +1,15 @@
+body {
+  font-family: 'HelveticaNeue'
+}
+
+h1 {
+  font-size: 17px;
+  font-weight:600;
+}
+
+.app-title {
+  font-family: 'HelveticaNeue';
+  text-align:center;
+  font-weight:300;
+  font-size: 15px;
+}
