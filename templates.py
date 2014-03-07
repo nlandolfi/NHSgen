@@ -2,6 +2,28 @@
 
 from string import Template
 
+applicationTemplate = Template("""
+  <!DOCTYPE html>
+  <html lang='en'>
+    <head>
+      <link rel='stylesheet' type='text/css' href='assets/css/bootstrap.min.css'>
+      <link rel='stylesheet' type='text/css' href='assets/css/app.css'>
+    </head>
+    <body>
+    <h1 class='app-title'>Menlo-Atherton National Honor Society Application 2014</h1>
+    <div class='container'>
+    <h1>Personal Information</h1>
+      $personalInformation
+      <h1>Leadership Activities</h1>
+        $leadershipActivities
+      <h1>Service Activities</h1>
+      $serviceActivities
+    </div>
+    </body>
+  </html>
+  """)
+
+
 personalInfoTemplate = Template("""
   <p>Full Name: $name</p>
   <p>Student ID #: $id</p>
@@ -51,20 +73,13 @@ activitiesTemplate = Template("""
   """)
 
 activityTemplate = Template("""
-    <td> $name
-    </td>
-    <td> $desc
-    </td>
-    <td>$hours
-    </td>
-    <td>$date
-    </td>
-    <td>$sName
-    </td>
-    <td>$sPhone
-    </td>
-    <td>$sEmail
-    </td>
+    <td> $name </td>
+    <td> $desc </td>
+    <td> $hours </td>
+    <td> $date </td>
+    <td> $sName </td>
+    <td> $sPhone </td>
+    <td> $sEmail </td>
   """)
 
 activityTemplate1 = Template("""
