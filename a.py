@@ -1,9 +1,33 @@
 #!/usr/bin/python
 
 import csv
+import subprocess
 import templates
 
-# Alias for generateApplications
+# Development, clear and rebuild applications
+def d():
+  _clearApplications()
+  generateApplications()
+
+# Alias for clearApplications()
+def c():
+  return clearApplications()
+
+# Removes all the applications in the applications directory
+def clearApplications():
+  decision = raw_input("Are you sure you want to remove applications? yn ")
+  if decision in ['Y', 'y']:
+    _clearApplications() 
+    print "Removed"
+  else:
+    print "Cancelled"
+  return  
+
+def _clearApplications():
+  subprocess.call("rm applications/*.html", shell=True)
+
+
+# Alias for generateApplications()
 def g():
   return generateApplications()
 
@@ -57,34 +81,26 @@ def normalizeActivity(data):
 def buildHash(fields, data):
   return dict(zip(fields,data))
 
+def buildPersonalInformation(info):
+  return templates.personalInfoTemplate.substitute(info)
+
+def buildActivities(activities):
+  activityTemplates = []
+  for x in activities:
+    activityTemplates.append(templates.activityTemplate.substitute(x))
+  return templates.activitiesTemplate.substitute(activity1=activityTemplates[0],
+                                           activity2=activityTemplates[1],
+                                           activity3=activityTemplates[2],
+                                           activity4=activityTemplates[3],
+                                           activity5=activityTemplates[4],
+                                           activity6=activityTemplates[5])
+
 
 def buildApplicationForm(fields, data):
-  payload = normalizeData(fields,data)
+  p = normalizeData(fields,data)
   fileName = p[0]['name'] + '.html'
   file = open('applications/' + fileName, 'w+')
-  file.write("<!DOCTYPE html> <html lang='en'>")
-  file.write("<link rel='stylesheet' type='text/css' href='assets/css/bootstrap.min.css'>")
-  file.write("<h1>Personal Information</h1>")
-  file.write(templates.personalInfoTemplate.substitute(p[0]))
-  leadershipTemplates = [];
-  for x in p[1]:
-    leadershipTemplates.append(templates.activityTemplate.substitute(x))
-  file.write("<h1>Leadership Activities</h1>")
-  file.write(templates.activitiesTemplate.substitute(activity1=leadershipTemplates[0],
-                                           activity2=leadershipTemplates[1],
-                                           activity3=leadershipTemplates[2],
-                                           activity4=leadershipTemplates[3],
-                                           activity5=leadershipTemplates[4],
-                                           activity6=leadershipTemplates[5]))
-  serviceTemplates = [];
-  for x in p[2]:
-    serviceTemplates.append(templates.activityTemplate.substitute(x))
-  file.write("<h1>Service Activities</h1>")
-  file.write(templates.activitiesTemplate.substitute(activity1=serviceTemplates[0],
-                                           activity2=serviceTemplates[1],
-                                           activity3=serviceTemplates[2],
-                                           activity4=serviceTemplates[3],
-                                           activity5=serviceTemplates[4],
-                                           activity6=serviceTemplates[5]))
-  file.write("</html>")
+  file.write(templates.applicationTemplate.substitute(personalInformation=buildPersonalInformation(p[0]),
+                                                      leadershipActivities=buildActivities(p[1]),
+                                                      serviceActivities=buildActivities(p[2])))
   file.close()
