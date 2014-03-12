@@ -28,15 +28,16 @@ def _clearApplications():
 
 
 # Alias for generateApplications()
-def g():
-  return generateApplications()
+def g(fileName=None):
+  return generateApplications(fileName)
 
 '''
   Main static function, reads "r.csv" and
   spits out html files in applications/
 '''
-def generateApplications():
-  reader = csv.reader(open('r.csv', 'rb'))
+def generateApplications(fileName=None):
+  fileName = fileName or 'r.csv'
+  reader = csv.reader(open(fileName, 'rb'))
   fields = []
   for applicant in reader:
     if len(fields) == 0:
