@@ -17,11 +17,11 @@ def c():
 def clearApplications():
   decision = raw_input("Are you sure you want to remove applications? yn ")
   if decision in ['Y', 'y']:
-    _clearApplications() 
+    _clearApplications()
     print "Removed"
   else:
     print "Cancelled"
-  return  
+  return
 
 def _clearApplications():
   subprocess.call("rm applications/*.html", shell=True)

@@ -39,7 +39,7 @@ personalInfoTemplate = Template("""
 activitiesTemplate = Template("""
   <table class='table'>
   <thead>
-    <tr> 
+    <tr>
       <th>Name</th>
       <th>Description</th>
       <th>Hours</th>
